@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    {{#if username}}
+        <p>Welcome, {{username}}! <a id="logout" href="/logout">Logout</a></p>
+    {{else}}
+        <p><a href="/login">Login</a> | <a href="/register">Register</a></p>
+    {{/if}}
+    {{{ body }}}
+</body>
+</html>

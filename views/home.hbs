@@ -1,0 +1,16 @@
+<h1>Welcome to the Chat App</h1>
+<form action="/new-room" method="POST">
+  <input type="hidden" name="nickname" value="{{username}}">
+  <button type="submit">Create New Chat Room</button>
+</form>
+
+{{#if chatRooms.length}}
+  <h2>Existing Chat Rooms:</h2>
+  <ul class="chat-rooms">
+    {{#each chatRooms}}
+      <li><a href="/{{this._doc.roomId}}?nickname={{username}}">{{this._doc.roomId}}</a></li> 
+    {{/each}}
+  </ul>
+{{else}}
+  <p>No existing chat rooms.</p>
+{{/if}}

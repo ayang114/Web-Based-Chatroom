@@ -1,0 +1,50 @@
+<h1>Register</h1>
+<form id="registerForm" action="/register" method="POST">
+  <input type="text" name="username" placeholder="Enter your Gmail address" required>
+  <input type="password" name="password" placeholder="Enter your password" required>
+  <p>Password must meet the following criteria:</p>
+  <ul>
+    <li>8-32 characters long</li>
+    <li>At least one uppercase letter</li>
+    <li>At least one lowercase letter</li>
+    <li>At least one number</li>
+    <li>At least one symbol</li>
+  </ul>
+  <button type="submit">Register</button>
+  <h2 id="or"><span>OR</span></h2>
+  <button id="google">Sign in with Google</button>
+</form>
+
+<script>
+// wait for submit event to happen
+document.getElementById('registerForm').addEventListener('submit', async (event) => {
+  // Prevents page from just reloading when submit button is pressed
+  event.preventDefault();
+
+  const formData = new FormData(event.target);
+  const username = formData.get('username');
+  const password = formData.get('password');
+
+  try {
+    const response = await fetch('/register', {
+      method: 'POST',
+      body: JSON.stringify({ username, password }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    if (!response.ok) {
+      const errorMessage = await response.text();
+      alert(errorMessage.replace(/\\n/g, '\n'));
+    } else {
+      // Reloads window so /login
+      window.location.href = '/login';
+    }
+  } catch (error) {
+    console.error('Error during registration:', error);
+    alert('An error occurred during registration');
+  }
+});
+</script>
+<script type="module" src="js/firebase.js"></script>
