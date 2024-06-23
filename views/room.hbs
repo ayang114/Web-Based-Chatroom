@@ -1,0 +1,125 @@
+<h1>Chat Room: {{roomName}}</h1>
+
+<div id="search">
+  <input type="text" id="searchInput" placeholder="Search messages">
+  <button id="searchButton">Search</button>
+</div>
+
+<div id="messages">
+  {{#each messages}}
+    <div id="message-{{this._id}}" class="message">
+      <strong>{{this.username}}:</strong> 
+      <span class="message-text">{{this.text}}</span> 
+      <em class="message-timestamp">{{this.createdAt}}</em>
+      {{#if (isOwnMessage this.username ../username)}}
+        <div class="message-buttons">
+          <button class="edit-button" data-id="{{this._id}}">Edit</button>
+          <button class="delete-button" data-id="{{this._id}}">Delete</button>
+        </div>
+      {{/if}}
+    </div>
+  {{/each}}
+</div>
+
+<form action="/{{roomName}}/message" method="POST">
+  <input type="hidden" name="username" value="{{username}}">
+  <textarea name="text" placeholder="Enter your message" required></textarea>
+  <button type="submit">Send</button>
+</form>
+
+<button id="backButton" onclick="window.location.href='/'">Back to Main Screen</button>
+
+<script>
+document.getElementById('searchButton').addEventListener('click', function() {
+  const searchTerm = document.getElementById('searchInput').value;
+  const roomName = '{{roomName}}';
+  
+  fetch(`/search/${roomName}?q=${searchTerm}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log('Search results:', data);
+      const messagesDiv = document.getElementById('messages');
+      
+      if (data.length > 0) {
+        messagesDiv.innerHTML = '';
+        data.forEach(message => {
+          const messageElement = document.createElement('div');
+          messageElement.classList.add('message');
+          messageElement.id = `message-${message._id}`;
+          messageElement.innerHTML = `
+            <strong>${message.nickname}:</strong> 
+            <span class="message-text">${message.text}</span> 
+            <em class="message-timestamp">${message.createdAt}</em> 
+            ${message.nickname === '{{username}}' ? `
+              <div class="message-buttons">
+                <button class="edit-button" data-id="${message._id}">Edit</button>
+                <button class="delete-button" data-id="${message._id}">Delete</button>
+              </div>` : ''}`;
+
+          messagesDiv.appendChild(messageElement);
+        });
+        addEventListeners();
+      } else {
+        alert("No messages found with that search term");
+      }
+    })
+    .catch(error => {
+      alert('Error occurred while searching for messages');
+    });
+});
+
+function addEventListeners() {
+  document.querySelectorAll('.edit-button').forEach(button => {
+    button.addEventListener('click', function() {
+      const messageId = this.getAttribute('data-id');
+      const messageText = document.querySelector(`#message-${messageId} .message-text`).innerText;
+      const newMessage = prompt('Edit your message:', messageText);
+      if (newMessage) {
+        fetch(`/message/${messageId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ text: newMessage })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            document.querySelector(`#message-${messageId} .message-text`).innerText = newMessage;
+          } else {
+            alert('Error updating message');
+          }
+        })
+        .catch(error => {
+          alert('Error updating message');
+        });
+      }
+    });
+  });
+
+  document.querySelectorAll('.delete-button').forEach(button => {
+    button.addEventListener('click', function() {
+      const messageId = this.getAttribute('data-id');
+      if (confirm('Are you sure you want to delete this message?')) {
+        fetch(`/message/${messageId}`, {
+          method: 'DELETE'
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            document.getElementById(`message-${messageId}`).remove();
+          } else {
+            alert('Error deleting message');
+          }
+        })
+        .catch(error => {
+          alert('Error deleting message');
+        });
+      }
+    });
+  });
+}
+
+// Add event listeners initially when the page loads
+addEventListeners();
+</script>

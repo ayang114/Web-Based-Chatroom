@@ -1,0 +1,27 @@
+{
+  "name": "assignment4",
+  "version": "1.0.0",
+  "description": "Stencil code for BrownCS1320 Assignment4",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "express": "^4.19.2",
+    "express-handlebars": "^3.1.0",
+    "express-session": "^1.18.0",
+    "method-override": "^3.0.0",
+    "moment": "^2.29.1",
+    "mongodb": "^6.7.0",
+    "mongoose": "^5.13.22"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "nodemon": "^2.0.2",
+    "stylelint": "^13.2.0",
+    "stylelint-config-standard": "^20.0.0"
+  }
+}
