@@ -1,5 +1,11 @@
-# Installation
-To clone and run this application, you'll need Git and Node.js installed on your computer. \
+# Online Chatroom
+
+A real-time online chatroom application allowing users to join, message, and interact with others in a shared chat space.
+
+
+### Installing
+
+To clone and run this application, you'll need Git and Node.js installed on your computer.
 
 <b>Setting Up and Running Guide</b>
 
@@ -37,8 +43,3 @@ Step 6: Copy and paste the URL below
 ```bash
 http://localhost:8080/
 ```
-
-# Usage
-Step 1: You will have to register for an account before accessing the chatroom \
-Step 2: You can open a chatroom or join an existing one in the home menu. \
-Step 3: After joining, you can start chatting.
