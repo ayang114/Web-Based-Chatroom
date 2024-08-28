@@ -35,7 +35,10 @@ npm start
 
 Step 5:  Open any Internet software
 ```bash
-https://www.google.com/
+Internet Explorer
+Google Chrome
+Firefox
+Etc.
 ```
 <br>
 
