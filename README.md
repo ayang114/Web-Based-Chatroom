@@ -11,7 +11,7 @@ To clone and run this application, you'll need Git and Node.js installed on your
 
 Step 1: Open terminal and run the code below
 ```bash
-<git clone https://github.com/ayang114/CS110GroupProject.git>
+git clone https://github.com/ayang114/CS110GroupProject.git
 ```
 <br>
 
