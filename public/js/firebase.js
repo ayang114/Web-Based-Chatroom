@@ -10,7 +10,7 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstati
 
 //Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBGvhBsmkCoLW0_B8ogCKIFkK5CrdPsfmA",
+  apiKey: "hehe",
   authDomain: "cs110final-c676b.firebaseapp.com",
   projectId: "cs110final-c676b",
   storageBucket: "cs110final-c676b.appspot.com",
